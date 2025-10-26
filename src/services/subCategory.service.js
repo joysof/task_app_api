@@ -16,8 +16,20 @@ const createSubCategory = async (data) => {
   }
 }
 
+const getAllSubCategory= async () =>{
+  try {
+    const subCategory = await SubCategory.find().populate('categoryId' , 'name')
+    return subCategory
+  } catch (error) {
+    logger.error('Error fetching subcategories:', error);
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+  }
+  
+}
+
 
 
 module.exports ={
-    createSubCategory
+    createSubCategory,
+    getAllSubCategory
 }

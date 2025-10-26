@@ -5,6 +5,7 @@ const subCategoryRoute = express.Router()
 
 
 subCategoryRoute.post('/', auth('admin') , subCategoryController.createSubCategory)
+subCategoryRoute.get('/', auth('admin') , subCategoryController.getAllSubCategory)
 
 
 module.exports = subCategoryRoute

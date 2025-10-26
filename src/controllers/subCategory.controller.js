@@ -17,8 +17,20 @@ const createSubCategory = catchAsync(async (req, res) => {
   )
 })
 
+const getAllSubCategory = catchAsync(async(req,res) =>{
+  const subcategories = await subCategoryService.getAllSubCategory()
+  res.status(httpStatus.OK).json(
+    response({
+      message: 'SubCategories fetched successfully',
+      status: 'OK',
+      statusCode: httpStatus.OK,
+      data: subcategories,
+    })
+  );
+})
 
 
 module.exports={
-    createSubCategory
+    createSubCategory,
+    getAllSubCategory
 }
