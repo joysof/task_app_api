@@ -8,6 +8,7 @@ const serviceRoute = express.Router()
 serviceRoute.post('/' , auth('admin') , ServiceController.createService)
 serviceRoute.get('/' , auth('admin' , 'client') , ServiceController.getAllService)
 serviceRoute.put('/:id' , auth('admin') , ServiceController.updateService)
+serviceRoute.delete('/:id' , auth('admin') , ServiceController.deleteService)
 
 // client route 
 

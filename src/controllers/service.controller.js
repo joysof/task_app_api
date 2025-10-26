@@ -56,11 +56,24 @@ const updateService = catchAsync(async (req, res) => {
     })
   );
 });
+const deleteService = catchAsync (async (req,res) =>{
+  const {id} = req.params
+  const service = await ServiceService.deleteService(id)
+   res.status(httpStatus.OK).json(
+    response({
+      message: 'Service delete',
+      status: 'OK',
+      statusCode: httpStatus.OK,
+      data: service,
+    })
+  );
+})
 
 
 module.exports={
     createService,
     getAllService,
     getServiceById,
-    updateService
+    updateService,
+    deleteService
 }

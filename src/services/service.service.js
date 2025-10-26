@@ -65,11 +65,19 @@ const updateServiceById = async (id, data) => {
   return service;
 };
 
+const deleteService = async(id) =>{
+  const service = await Service.findByIdAndDelete(id)
+  if(!service){
+    throw new ApiError(httpStatus.NOT_FOUND , "service not found ")
 
+  }
+  return service
+}
 module.exports ={
     createService,
     getAllService,
     getServiceById,
-    updateServiceById
+    updateServiceById,
+    deleteService
     
 }
