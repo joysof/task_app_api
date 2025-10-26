@@ -4,10 +4,12 @@ const mongoose = require('mongoose')
 
 const categorySchema = new mongoose.Schema(
     {
-        name : String,
-        require : true ,
+        name : {
+          type :  String,
+        required : true ,
         unique : true,
         trim : true
+        }
     },{timestamps : true}
 )
 

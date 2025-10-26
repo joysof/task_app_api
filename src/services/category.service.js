@@ -17,3 +17,6 @@ const createCategory = async(data) =>{
 }
 
 
+module.exports ={
+    createCategory
+}

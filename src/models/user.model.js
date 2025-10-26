@@ -94,11 +94,6 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    fcmToken: { // onlly use for firebase push notification / mobile focus*
-      type: String,
-      required: false,
-      default: null,
-    },
     isDeleted: {
       type: Boolean,
       default: false
