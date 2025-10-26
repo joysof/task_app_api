@@ -6,6 +6,7 @@ const response = require('../config/response')
 const { categoryService } = require('../services')
 
 const createCategory = catchAsync(async (req, res) => {
+  
   const category = await categoryService.createCategory(req.body)
 
   res.status(httpStatus.CREATED).json(

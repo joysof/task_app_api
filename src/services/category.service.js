@@ -5,7 +5,7 @@ const {Category} = require("../models")
 
 const createCategory = async(data) =>{
     if (!data) {
-        throw new ApiError(httpStatus.BAD_REQUEST ,"Name is required")
+        throw new ApiError(httpStatus.BAD_REQUEST ," category Name is required")
     }
     try {
         const category = await Category.create(data)
