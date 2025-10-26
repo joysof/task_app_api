@@ -28,9 +28,21 @@ const getAllSubCategory = catchAsync(async(req,res) =>{
     })
   );
 })
-
+const deleteSubCategory = catchAsync(async(req,res) =>{
+ const { id } = req.params;
+ const subcategory = await subCategoryService.deleteSubCategory(id)
+  res.status(httpStatus.OK).json(
+    response({
+      message: 'SubCategory deleted successfully',
+      status: 'OK',
+      statusCode: httpStatus.OK,
+      data: subcategory,
+    })
+  );
+})
 
 module.exports={
     createSubCategory,
-    getAllSubCategory
+    getAllSubCategory,
+    deleteSubCategory
 }
