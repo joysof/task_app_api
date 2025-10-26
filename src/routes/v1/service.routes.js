@@ -5,6 +5,7 @@ const serviceRoute = express.Router()
 
 
 serviceRoute.post('/' , auth('admin') , ServiceController.createService)
+serviceRoute.get('/' , auth('admin') , ServiceController.getAllService)
 
 
 module.exports = serviceRoute

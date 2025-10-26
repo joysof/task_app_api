@@ -17,7 +17,20 @@ const createService = catchAsync(async (req, res) => {
   )
 })
 
+const getAllService = catchAsync(async(req,res) =>{
+  const services = await ServiceService.getAllService()
+  res.status(httpStatus.OK).json(
+    response({
+      message: 'SubCategories fetched successfully',
+      status: 'OK',
+      statusCode: httpStatus.OK,
+      data: services,
+    })
+  );
+})
+
 
 module.exports={
     createService,
+    getAllService
 }

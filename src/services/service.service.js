@@ -18,11 +18,27 @@ const createService = async (data) => {
   }
 }
 
+const getAllService = async () =>{
+
+  try {
+    const service = await Service.find()
+     .populate('categoryId', 'name')
+    .populate('subCategoryId', 'name');
+   
+    return service
+  } catch (error) {
+    logger.error('Error fetching service:', error);
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+  }
+  
+}
+
 
 
 
 
 module.exports ={
     createService,
+    getAllService
     
 }
