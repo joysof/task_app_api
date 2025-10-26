@@ -35,7 +35,7 @@ const getAllService = async () =>{
 
 const getServiceById = async (id) => {
      if (!id) {
-        throw new ApiError(httpStatus.NOT_FOUND , "Please provide category ID")
+        throw new ApiError(httpStatus.NOT_FOUND , "Please provide service ID")
     }
   const service = await Service.findById(id)
     .populate('categoryId', 'name')
@@ -49,10 +49,27 @@ const getServiceById = async (id) => {
 };
 
 
+const updateServiceById = async (id, data) => {
+  if (!id) {
+        throw new ApiError(httpStatus.NOT_FOUND , "Please provide service ID")
+    }
+  const service = await Service.findByIdAndUpdate(id, data, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!service) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Service not found');
+  }
+
+  return service;
+};
+
 
 module.exports ={
     createService,
     getAllService,
-    getServiceById
+    getServiceById,
+    updateServiceById
     
 }

@@ -43,9 +43,24 @@ const getServiceById = catchAsync(async (req, res) => {
   );
 });
 
+const updateService = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const updated = await ServiceService.updateServiceById(id, req.body);
+
+  res.status(httpStatus.OK).json(
+    response({
+      message: 'Service Updated',
+      status: 'OK',
+      statusCode: httpStatus.OK,
+      data: updated,
+    })
+  );
+});
+
 
 module.exports={
     createService,
     getAllService,
-    getServiceById
+    getServiceById,
+    updateService
 }

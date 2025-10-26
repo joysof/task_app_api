@@ -35,7 +35,7 @@ console.log('🟢 userRights:', roleRights.get(user.role));
 
     if (requiredRights.length) {
       const userRights = roleRights.get(user.role);
-      const hasRequiredRights = requiredRights.every((requiredRight) =>
+      const hasRequiredRights = requiredRights.some((requiredRight) =>
         userRights.includes(requiredRight)
       );
       if (!hasRequiredRights && req.params.userId !== user.id) {
