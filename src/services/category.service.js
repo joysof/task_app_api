@@ -22,8 +22,21 @@ const getAllCategory = async (filter = {}) =>{
     }
     return categories;
 }
+const updateCategoryById = async (id , bodyData) =>{
+    if (!id) {
+        throw new ApiError(httpStatus.NOT_FOUND , "categoy not found")
+    }
+    const category = await Category.findById(id)
+    if (!category) {
+        throw new ApiError(httpStatus.NOT_FOUND , "category not found")
+    }
+    Object.assign(category , bodyData)
+    await category.save()
+    return category
+}
 
 module.exports ={
     createCategory ,
-    getAllCategory
+    getAllCategory,
+    updateCategoryById
 }
