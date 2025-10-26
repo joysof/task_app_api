@@ -18,8 +18,22 @@ const createCategory = catchAsync(async (req, res) => {
   )
 })
 
+const getAllCategories = catchAsync(async (req, res) => {
+  
+  const result = await categoryService.getAllCategory();
+  res.status(httpStatus.OK).json(
+    response({
+      message: "All Categories",
+      status: "OK",
+      statusCode: httpStatus.OK,
+      data: result,
+    })
+  );
+});
+
 
 
 module.exports ={
-    createCategory
+    createCategory ,
+    getAllCategories
 }

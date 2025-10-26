@@ -15,8 +15,15 @@ const createCategory = async(data) =>{
         throw new ApiError(httpStatus.BAD_REQUEST , error.message)
     }
 }
-
+const getAllCategory = async (filter = {}) =>{
+    const categories = await Category.find(filter).sort('-createdAt')
+    if (!categories.length) {
+        throw new ApiError(httpStatus.NOT_FOUND , "No categories found")
+    }
+    return categories;
+}
 
 module.exports ={
-    createCategory
+    createCategory ,
+    getAllCategory
 }
