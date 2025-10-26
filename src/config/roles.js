@@ -2,7 +2,7 @@
 
 const allRoles = {
   user: ["common", "user"],
-  client: ["common", "commonAdmin", "client"],
+  client: ["common", "commonClient","admin", "client"],
   admin: ["common", "commonAdmin", "admin"],
 };
 

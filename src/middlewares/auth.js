@@ -5,6 +5,10 @@ const { roleRights } = require("../config/roles");
 const jwt = require("jsonwebtoken");
 const { Activity } = require("../models");
 
+
+
+
+
 const verifyCallback =
   (req, resolve, reject, requiredRights) => async (err, user, info) => {
     if (err || info || !user) {
@@ -13,7 +17,9 @@ const verifyCallback =
       );
     }
     req.user = user;
-
+  console.log('🟢 user role:', user.role);
+console.log('🟢 requiredRights:', requiredRights);
+console.log('🟢 userRights:', roleRights.get(user.role));
 
     const { authorization } = req.headers;
   
