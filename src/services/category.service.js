@@ -24,7 +24,7 @@ const getAllCategory = async (filter = {}) =>{
 }
 const updateCategoryById = async (id , bodyData) =>{
     if (!id) {
-        throw new ApiError(httpStatus.NOT_FOUND , "categoy not found")
+        throw new ApiError(httpStatus.NOT_FOUND , "Please provide category ID")
     }
     const category = await Category.findById(id)
     if (!category) {
@@ -34,9 +34,22 @@ const updateCategoryById = async (id , bodyData) =>{
     await category.save()
     return category
 }
+const deleteCategoryById = async (id) =>{
+    console.log("type of id" , typeof(id))
+    if (!id) {
+        throw new ApiError(httpStatus.NOT_FOUND , "Please provide category ID")
+    }
+    const category = await Category.findByIdAndDelete(id)
+    console.log("category" , category)
+    if (!category) {
+        throw new ApiError(httpStatus.NOT_FOUND , "category not found")
+    }
+    return category
+}
 
 module.exports ={
     createCategory ,
     getAllCategory,
-    updateCategoryById
+    updateCategoryById ,
+    deleteCategoryById
 }
