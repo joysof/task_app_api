@@ -6,16 +6,6 @@ const { roles } = require("../config/roles");
 
 const userSchema = mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    lastName: {
-      type: String,
-      required: false,
-      default: null,
-    },
     fullName: {
       type: String,
       required: false,

@@ -2,8 +2,8 @@
 
 const allRoles = {
   user: ["common", "user"],
+  client: ["common", "commonAdmin", "client"],
   admin: ["common", "commonAdmin", "admin"],
-  superAdmin: ["common", "commonAdmin", "superAdmin"],
 };
 
 const roles = Object.keys(allRoles);
