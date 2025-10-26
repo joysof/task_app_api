@@ -4,7 +4,7 @@ const { categoryController } = require("../../controllers")
 
 const categoryRoute = express.Router()
 
-categoryRoute.post('/' , auth() ,categoryController.createCategory)
+categoryRoute.post('/' , auth('admin') ,categoryController.createCategory)
 
 
 
