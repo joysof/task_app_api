@@ -37,11 +37,24 @@ const deleteSubCategory = async (id) =>{
 
   return subCategory
 }
+const updateSubCategory = async (id ,data) =>{
+  if (!id) {
+        throw new ApiError(httpStatus.NOT_FOUND , "Please provide category ID")
+    }
+
+  const updateSubCategory = await SubCategory.findByIdAndUpdate(id , data ,{new :true ,runValidators: true })
+  if (!updateSubCategory) {
+    throw new ApiError(httpStatus.NOT_FOUND , "subCategory not found")
+  }
+
+  return updateSubCategory
+}
 
 
 
 module.exports ={
     createSubCategory,
     getAllSubCategory,
-    deleteSubCategory
+    deleteSubCategory,
+    updateSubCategory
 }
