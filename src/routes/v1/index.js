@@ -5,6 +5,7 @@ const userRoute = require("./user.routes");
 const docsRoute = require("./docs.routes");
 const categoryRoute = require("./category.routes");
 const subCategoryRoute = require("./subCategory.routes");
+const serviceRoute = require("./service.routes");
 
 
 const router = express.Router();
@@ -25,6 +26,10 @@ const defaultRoutes = [
   {
     path: "/subCategory",
     route:subCategoryRoute,
+  },
+  {
+    path: "/service",
+    route:serviceRoute,
   },
  
 ];

@@ -10,7 +10,7 @@ const serviceSchema = mongoose.Schema({
     },
     price :{
         type : Number,
-        required : trun ,
+        required : true ,
         min : 0
     },
     subCategoryId : {
