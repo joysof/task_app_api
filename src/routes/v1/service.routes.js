@@ -6,12 +6,12 @@ const serviceRoute = express.Router()
 // addmin route 
 
 serviceRoute.post('/' , auth('admin') , ServiceController.createService)
-serviceRoute.get('/' , auth('admin' , 'client') , ServiceController.getAllService)
 serviceRoute.put('/:id' , auth('admin') , ServiceController.updateService)
 serviceRoute.delete('/:id' , auth('admin') , ServiceController.deleteService)
 
-// client route 
+// client route  and admin route 
 
 serviceRoute.get('/:id' , auth('admin' ,'client') , ServiceController.getServiceById)
+serviceRoute.get('/' , auth('admin' , 'client') , ServiceController.getAllService)
 
 module.exports = serviceRoute
