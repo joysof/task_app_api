@@ -91,7 +91,7 @@ const isUpdateUser = async (userId, updateBody) => {
   const oneTimeCode =
     Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
 
-  if (updateBody.role === "user" || updateBody.role === "admin") {
+  if (updateBody.role === "user" || updateBody.role === "admin" || updateBody.role === "client") {
     sendEmailVerification(updateBody.email, oneTimeCode);
   }
 
