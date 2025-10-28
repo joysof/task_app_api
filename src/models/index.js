@@ -10,3 +10,4 @@ module.exports.Support = require('./support.model');
 module.exports.Category = require('./category.model')
 module.exports.SubCategory = require('./subCategory.model')
 module.exports.Service = require('./service.model')
+module.exports.Order = require('./order.model')

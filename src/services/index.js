@@ -5,3 +5,4 @@ module.exports.userService = require('./user.service');
 module.exports.categoryService = require('./category.service')
 module.exports.subCategoryService = require('./subCategory.service')
 module.exports.ServiceService = require('./service.service')
+module.exports.OrderService = require('./order.service')
