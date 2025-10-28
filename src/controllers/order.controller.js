@@ -5,10 +5,9 @@ const response = require('../config/response')
 const { OrderService } = require('../services')
 
 const createOrder = catchAsync(async (req, res) => {
-  
-    const cliendId = req.user._id
-    const {serviceId , quantity} = req.body
-  const order = await OrderService.createOrder(cliendId , serviceId , quantity)
+  const cliendId = req.user._id
+  const { serviceId, quantity } = req.body
+  const order = await OrderService.createOrder(cliendId, serviceId, quantity)
   res.status(httpStatus.CREATED).json(
     response({
       message: 'order buy',
@@ -19,11 +18,19 @@ const createOrder = catchAsync(async (req, res) => {
   )
 })
 
+const getAllOrders = catchAsync(async (req, res) => {
+  const order = await OrderService.getAllOrders()
+  res.status(httpStatus.OK).json(
+    response({
+      message: 'SubCategories fetched successfully',
+      status: 'OK',
+      statusCode: httpStatus.OK,
+      data :order
+    })
+  )
+})
 
-
-
-
-
-module.exports={
-    createOrder
+module.exports = {
+  createOrder,
+  getAllOrders
 }

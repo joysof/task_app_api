@@ -5,9 +5,8 @@ const { Service ,Order } = require('../models')
 
 
 
-const claculatePrice = (basePrice , quantity) =>{
-  return Number((basePrice * quantity))
-}
+
+
 const createOrder = async (cliendId , serviceId , quantity) => {
     if(!serviceId){
         throw new ApiError(httpStatus.NOT_FOUND , "service not found")
@@ -15,9 +14,14 @@ const createOrder = async (cliendId , serviceId , quantity) => {
   if (!cliendId || ! quantity) {
     throw new ApiError(httpStatus.BAD_REQUEST, ' some data messing tring agin')
   }
+  console.log("service model" , Service)
 
   try {
-      const totalPrice = claculatePrice(Service.basePrice , quantity)
+      const service = await Service.findById(serviceId)
+    if (!service) {
+      throw new ApiError(httpStatus.NOT_FOUND, "Service not found")
+    }
+      const totalPrice = claculatePrice(service.basePrice , quantity)
       const order = await Order.create({
         client : cliendId,
         service : Service._id,
@@ -31,7 +35,21 @@ const createOrder = async (cliendId , serviceId , quantity) => {
   }
   
 }
+const claculatePrice = (basePrice , quantity) =>{
+  return Number((basePrice * quantity))
+}
 
+const getAllOrders = async () =>{
+
+   try {
+    const order = await Order.find()
+      .populate('service', 'name price')
+    return order
+  } catch (error) {
+    logger.error('Error fetching order:', error);
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+  }
+}
 
 
 
@@ -41,6 +59,7 @@ const createOrder = async (cliendId , serviceId , quantity) => {
 
 module.exports ={
     
-    createOrder
+    createOrder,
+    getAllOrders
     
 }

@@ -5,5 +5,6 @@ const orderRoute = express.Router()
 
 
 orderRoute.post('/' , auth('client') , OrderController.createOrder)
+orderRoute.get('/' , auth('client') , OrderController.getAllOrders)
 
 module.exports =orderRoute
