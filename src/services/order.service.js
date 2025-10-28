@@ -1,7 +1,7 @@
 const httpStatus = require('http-status')
 const ApiError = require('../utils/ApiError')
 const logger = require('../config/logger')
-const { Service ,Order } = require('../models')
+const { Service ,Order, User } = require('../models')
 
 
 
@@ -24,7 +24,7 @@ const createOrder = async (cliendId , serviceId , quantity) => {
       const totalPrice = claculatePrice(service.basePrice , quantity)
       const order = await Order.create({
         client : cliendId,
-        service : Service._id,
+        service : service._id,
         quantity,
         totalPrice
       })
@@ -51,6 +51,29 @@ const getAllOrders = async () =>{
   }
 }
 
+const getMyOrders= async (cliendId) =>{
+     try {
+    const order = await Order.find({client : cliendId})
+      .populate('service', 'name price')
+    return order
+  } catch (error) {
+    logger.error('Error fetching order:', error);
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+  }
+}
+const getOrderForOrderId = async (orderId) =>{
+
+     try {
+    const order = await Order.find({client : orderId})
+    
+      .populate('service', 'name price')
+    return order
+  } catch (error) {
+    logger.error('Error fetching order:', error);
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+  }
+}
+
 
 
 
@@ -60,6 +83,7 @@ const getAllOrders = async () =>{
 module.exports ={
     
     createOrder,
-    getAllOrders
+    getAllOrders,
+    getMyOrders
     
 }

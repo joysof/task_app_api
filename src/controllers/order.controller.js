@@ -22,7 +22,19 @@ const getAllOrders = catchAsync(async (req, res) => {
   const order = await OrderService.getAllOrders()
   res.status(httpStatus.OK).json(
     response({
-      message: 'SubCategories fetched successfully',
+      message: 'orders fetched successfully',
+      status: 'OK',
+      statusCode: httpStatus.OK,
+      data :order
+    })
+  )
+})
+const getMyOrders = catchAsync(async (req, res) => {
+    const cliendId = req.user._id
+  const order = await OrderService.getMyOrders(cliendId)
+  res.status(httpStatus.OK).json(
+    response({
+      message: 'oders fetched successfully',
       status: 'OK',
       statusCode: httpStatus.OK,
       data :order
@@ -32,5 +44,6 @@ const getAllOrders = catchAsync(async (req, res) => {
 
 module.exports = {
   createOrder,
-  getAllOrders
+  getAllOrders,
+  getMyOrders
 }
