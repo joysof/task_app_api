@@ -8,10 +8,20 @@ const serviceSchema = mongoose.Schema({
         required : true,
         trim : true
     },
-    price :{
+     quantity:{
+        type : Number,
+        required: true ,
+        default : 1
+     },
+    basePrice :{
         type : Number,
         required : true ,
         min : 0
+    },
+    currentPrice:{
+        type : Number,
+        required : true,
+        default : 0
     },
     subCategoryId : {
         type : mongoose.Schema.Types.ObjectId,
