@@ -9,7 +9,7 @@ const createService = catchAsync(async (req, res) => {
   const service = await ServiceService.createService(req.body)
   res.status(httpStatus.CREATED).json(
     response({
-      message: 'SubCategory Created',
+      message: 'service Created',
       status: 'OK',
       statusCode: httpStatus.CREATED,
       data: service,
@@ -69,11 +69,10 @@ const deleteService = catchAsync (async (req,res) =>{
   );
 })
 
-
 module.exports={
     createService,
     getAllService,
     getServiceById,
     updateService,
-    deleteService
+    deleteService,
 }

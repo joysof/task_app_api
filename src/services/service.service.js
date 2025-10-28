@@ -73,11 +73,14 @@ const deleteService = async(id) =>{
   }
   return service
 }
+
+
 module.exports ={
     createService,
     getAllService,
     getServiceById,
     updateServiceById,
-    deleteService
+    deleteService,
+    
     
 }
