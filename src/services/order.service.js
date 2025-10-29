@@ -2,6 +2,7 @@ const httpStatus = require('http-status')
 const ApiError = require('../utils/ApiError')
 const logger = require('../config/logger')
 const { Service ,Order, User } = require('../models')
+const { http } = require('winston')
 
 
 
@@ -44,6 +45,7 @@ const getAllOrders = async () =>{
    try {
     const order = await Order.find()
       .populate('service', 'name price')
+      .populate('client' ,'name email')
     return order
   } catch (error) {
     logger.error('Error fetching order:', error);
@@ -53,20 +55,24 @@ const getAllOrders = async () =>{
 
 const getMyOrders= async (cliendId) =>{
      try {
-    const order = await Order.find({client : cliendId})
+    const orders = await Order.find({client : cliendId})
       .populate('service', 'name price')
-    return order
+    return orders
   } catch (error) {
     logger.error('Error fetching order:', error);
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
   }
 }
-const getOrderForOrderId = async (orderId) =>{
+const getMyOrderById = async (orderId , cliendId) =>{
+
 
      try {
-    const order = await Order.find({client : orderId})
+    const order = await Order.findOne({_id : orderId , client : cliendId})
+    if(!order){
+      throw new ApiError(httpStatus.NOT_FOUND,"order not found")
+    }
     
-      .populate('service', 'name price')
+      order.populate('service', 'name price')
     return order
   } catch (error) {
     logger.error('Error fetching order:', error);
@@ -84,6 +90,7 @@ module.exports ={
     
     createOrder,
     getAllOrders,
-    getMyOrders
+    getMyOrders,
+    getMyOrderById
     
 }

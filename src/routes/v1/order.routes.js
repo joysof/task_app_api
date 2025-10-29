@@ -7,7 +7,8 @@ const orderRoute = express.Router()
 
 
 orderRoute.post('/' , auth('client') , OrderController.createOrder)
-orderRoute.get('/orders' , auth('client') , OrderController.getMyOrders)
+orderRoute.get('/myOrders' , auth('client') , OrderController.getMyOrders)
+orderRoute.get('/myOrder' , auth('client') , OrderController.getMyOrders)
 
 // admin routes 
 orderRoute.get('/' , auth('admin') , OrderController.getAllOrders)
