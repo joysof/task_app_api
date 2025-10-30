@@ -1,11 +1,16 @@
 const httpStatus = require('http-status')
 const ApiError = require('../utils/ApiError')
 const logger = require('../config/logger')
-const { SubCategory } = require('../models')
+const { SubCategory, Category } = require('../models')
 
 const createSubCategory = async (data) => {
-  if (!data.name || !data.categoryId) {
+  const {name , categoryId} = data
+  if (!name || !categoryId) {
     throw new ApiError(httpStatus.BAD_REQUEST, ' subCategory Name is required')
+  }
+  const category = await Category.findById(categoryId)
+  if (!category) {
+    throw new ApiError(httpStatus.NOT_FOUND , "category not found")
   }
   try {
     const subCategory = await SubCategory.create(data)

@@ -11,6 +11,7 @@ const { Activity } = require("../models");
 
 const verifyCallback =
   (req, resolve, reject, requiredRights) => async (err, user, info) => {
+    console.log("user role" , user.role)
     if (err || info || !user) {
       return reject(
         new ApiError(httpStatus.UNAUTHORIZED, "You are not authorized")

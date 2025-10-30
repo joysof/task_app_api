@@ -22,6 +22,7 @@ const getAllCategory = async (filter = {}) =>{
     }
     return categories;
 }
+
 const updateCategoryById = async (id , bodyData) =>{
     if (!id) {
         throw new ApiError(httpStatus.NOT_FOUND , "Please provide category ID")
