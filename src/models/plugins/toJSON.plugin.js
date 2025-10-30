@@ -39,7 +39,7 @@ const toJSON = (schema) => {
       delete ret.isResetPassword;
       delete ret.securitySettings;
       delete ret.updatedAt;
-      // delete ret.createdAt;
+      delete ret.createdAt;
       if (transform) {
         return transform(doc, ret, options);
       }

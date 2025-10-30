@@ -26,7 +26,7 @@ const getAllSubCategory= async (filter , option) =>{
     const query = {};
   
   
-       for (const key of Object.keys(filter)) {
+      for (const key of Object.keys(filter)) {
       if (
         (key === "name") &&
         filter[key] !== ""
@@ -41,8 +41,32 @@ const getAllSubCategory= async (filter , option) =>{
       ...option,
       populate: ('categoryId')
     })
+
+    const grouped = {};
+
+  subCategories.results.forEach(service => {
+    const category = service.categoryId;
+    if (!category) return;
+
+    if (!grouped[category.id]) {
+      grouped[category.id] = {
+        category: {
+          id: category.id,
+          name: category.name,
+        },
+        subCategories: [],
+      };
+    }
+
+    grouped[category.id].subCategories.push({
+      id: service.id,
+      name: service.name,
+    });
+  });
+
+  const formatted = Object.values(grouped);
     
-    return subCategories
+    return formatted
   } catch (error) {
     logger.error('Error fetching subcategories:', error);
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
