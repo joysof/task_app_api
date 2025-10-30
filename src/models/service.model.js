@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const { toJSON, paginate } = require("./plugins");
 
 
 const serviceSchema = mongoose.Schema({
@@ -30,6 +30,7 @@ const serviceSchema = mongoose.Schema({
     }
 },{timestamps: true})
 
-
+serviceSchema.plugin(toJSON);
+serviceSchema.plugin(paginate);
 const Service = mongoose.model("Service" , serviceSchema)
 module.exports = Service

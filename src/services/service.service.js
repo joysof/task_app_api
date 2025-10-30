@@ -26,12 +26,26 @@ const createService = async (data) => {
   }
 }
 
-const getAllService = async () =>{
+const getAllService = async (filter , option) =>{
+
+  const query = {}
+ for (const key of Object.keys(filter)) {
+      if (
+        (key === "name") &&
+        filter[key] !== ""
+      ) {
+        query[key] = { $regex: filter[key], $options: "i" };
+      } else if (filter[key] !== "") {
+        query[key] = filter[key];
+      }
+    }
 
   try {
-    const service = await Service.find()
-     .populate('categoryId', 'name')
-    .populate('subCategoryId', 'name');
+    const service = await Service.paginate(query , {
+      ...option,
+     populate: 'categoryId subCategoryId',
+    })
+     
    
     return service
   } catch (error) {

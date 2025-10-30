@@ -37,7 +37,6 @@ const getAllSubCategory= async (filter , option) =>{
       }
     }
   try {
-    delete option.populate;
     const subCategories = await SubCategory.paginate(query, {
       ...option,
       populate: ('categoryId')
