@@ -20,8 +20,9 @@ const createCategory = catchAsync(async (req, res) => {
 })
 
 const getAllCategories = catchAsync(async (req, res) => {
-  
-  const result = await categoryService.getAllCategory();
+  const filter = pick(req.query, ["name"])
+  const options = pick(req.query , ["sortBy", "limit", "page"])
+  const result = await categoryService.getAllCategory(filter , options);
   res.status(httpStatus.OK).json(
     response({
       message: "All Categories",
