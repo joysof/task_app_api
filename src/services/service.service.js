@@ -1,12 +1,20 @@
 const httpStatus = require('http-status')
 const ApiError = require('../utils/ApiError')
 const logger = require('../config/logger')
-const { Service } = require('../models')
+const { Service, Category, SubCategory } = require('../models')
 
 const createService = async (data) => {
-
-  if (!data.name || !data.categoryId || !data.subCategoryId || !data.price) {
+  const {name , categoryId , subCategoryId , price} = data
+  if (!name || !categoryId || !subCategoryId || !price) {
     throw new ApiError(httpStatus.BAD_REQUEST, ' some data messing')
+  }
+  const category = await Category.findById(categoryId)
+  if (!category) {
+    throw new ApiError(httpStatus.NOT_FOUND,"category not found")
+  }
+  const subCategory = await SubCategory.findById(subCategoryId)
+  if (!subCategory) {
+    throw new ApiError(httpStatus.NOT_FOUND,"subCategory not found")
   }
 
   try {
