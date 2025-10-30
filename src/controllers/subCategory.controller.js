@@ -3,6 +3,7 @@ const ApiError = require('../utils/ApiError')
 const catchAsync = require('../utils/catchAsync')
 const response = require('../config/response')
 const { subCategoryService } = require('../services')
+const pick = require('../utils/pick')
 
 const createSubCategory = catchAsync(async (req, res) => {
   
@@ -18,13 +19,16 @@ const createSubCategory = catchAsync(async (req, res) => {
 })
 
 const getAllSubCategory = catchAsync(async(req,res) =>{
-  const subcategories = await subCategoryService.getAllSubCategory()
+
+  const filter = pick(req.query, ["name"])
+  const options = pick(req.query , ["sortBy", "limit", "page"])
+  const result = await subCategoryService.getAllSubCategory(filter , options);
   res.status(httpStatus.OK).json(
     response({
       message: 'SubCategories fetched successfully',
       status: 'OK',
       statusCode: httpStatus.OK,
-      data: subcategories,
+      data: result,
     })
   );
 })

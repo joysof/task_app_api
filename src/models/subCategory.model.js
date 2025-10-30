@@ -1,7 +1,6 @@
 
 const mongoose = require('mongoose')
-
-
+const { toJSON, paginate } = require("./plugins");
 const subCategorySchema = mongoose.Schema(
     {
         name : {
@@ -17,6 +16,8 @@ const subCategorySchema = mongoose.Schema(
         }
     },{timestamps: true,}
 )
+subCategorySchema.plugin(toJSON);
+subCategorySchema.plugin(paginate);
 
 const SubCategory = mongoose.model("SubCategory" , subCategorySchema)
 module.exports = SubCategory

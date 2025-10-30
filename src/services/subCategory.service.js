@@ -21,10 +21,29 @@ const createSubCategory = async (data) => {
   }
 }
 
-const getAllSubCategory= async () =>{
+const getAllSubCategory= async (filter , option) =>{
+
+    const query = {};
+  
+  
+       for (const key of Object.keys(filter)) {
+      if (
+        (key === "name") &&
+        filter[key] !== ""
+      ) {
+        query[key] = { $regex: filter[key], $options: "i" };
+      } else if (filter[key] !== "") {
+        query[key] = filter[key];
+      }
+    }
   try {
-    const subCategory = await SubCategory.find().populate('categoryId' , 'name')
-    return subCategory
+    delete option.populate;
+    const subCategories = await SubCategory.paginate(query, {
+      ...option,
+      populate: ('categoryId')
+    })
+    
+    return subCategories
   } catch (error) {
     logger.error('Error fetching subcategories:', error);
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
