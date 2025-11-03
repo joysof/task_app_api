@@ -24,10 +24,18 @@ const orderSchema = mongoose.Schema(
     quantity: {
       type: Number,
     },
-     totalPrice: {
-        type: Number,
-        required: true,
-      },
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
+    startDate: {
+      type: Date,
+      default: Date.now,
+    },
+    endDate: {
+      type: Date,
+      required: true,
+    },
   },
   { timestamps: true }
 )

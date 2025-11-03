@@ -8,8 +8,12 @@ const createUser = async (userBody) => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
   }
+  console.log("user body" ,userBody)
+  if (userBody.role === "admin") {
+    throw new ApiError(httpStatus.BAD_REQUEST , "Admin can not register")
+  }
   const oneTimeCode = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
-
+  
   if (userBody.role === "user" || userBody.role === "admin") {
 
     sendEmailVerification(userBody.email, oneTimeCode);

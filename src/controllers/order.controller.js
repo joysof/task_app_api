@@ -6,8 +6,8 @@ const { OrderService } = require('../services')
 
 const createOrder = catchAsync(async (req, res) => {
   const cliendId = req.user._id
-  const { serviceId, quantity } = req.body
-  const order = await OrderService.createOrder(cliendId, serviceId, quantity)
+  const { serviceId, quantity ,endDate} = req.body
+  const order = await OrderService.createOrder(cliendId, serviceId, quantity,endDate)
   res.status(httpStatus.CREATED).json(
     response({
       message: 'order buy',

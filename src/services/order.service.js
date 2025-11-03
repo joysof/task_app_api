@@ -4,14 +4,13 @@ const logger = require('../config/logger')
 const { Service, Order, User } = require('../models')
 const { http } = require('winston')
 
-const createOrder = async (cliendId, serviceId, quantity) => {
+const createOrder = async (cliendId, serviceId, quantity , endDate) => {
   if (!serviceId) {
     throw new ApiError(httpStatus.NOT_FOUND, 'service not found')
   }
-  if (!cliendId || !quantity) {
+  if (!cliendId || !quantity || !endDate) {
     throw new ApiError(httpStatus.BAD_REQUEST, ' some data messing tring agin')
   }
-  console.log('service model', Service)
 
   try {
     const service = await Service.findById(serviceId)
@@ -24,6 +23,7 @@ const createOrder = async (cliendId, serviceId, quantity) => {
       service: service._id,
       quantity,
       totalPrice,
+      endDate
     })
     return order
   } catch (error) {
@@ -51,7 +51,7 @@ const getMyOrders = async (cliendId) => {
   try {
     const orders = await Order.find({ client: cliendId }).populate(
       'service',
-      'name price'
+      'name price endDate'
     )
     return orders
   } catch (error) {

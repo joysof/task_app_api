@@ -4,8 +4,8 @@ const logger = require('../config/logger')
 const { Service, Category, SubCategory } = require('../models')
 
 const createService = async (data) => {
-  const {name , categoryId , subCategoryId , price} = data
-  if (!name || !categoryId || !subCategoryId || !price) {
+  const {name , categoryId , subCategoryId} = data
+  if (!name || !categoryId || !subCategoryId) {
     throw new ApiError(httpStatus.BAD_REQUEST, ' some data messing')
   }
   const category = await Category.findById(categoryId)
@@ -129,6 +129,10 @@ const updateServiceById = async (id, data) => {
 
   return service;
 };
+
+
+
+
 
 const deleteService = async(id) =>{
   const service = await Service.findByIdAndDelete(id)
