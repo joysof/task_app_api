@@ -4,11 +4,11 @@ const logger = require('../config/logger')
 const { Service, Order, User } = require('../models')
 const { http } = require('winston')
 
-const createOrder = async (cliendId, serviceId, quantity , endDate) => {
+const createOrder = async (cliendId, serviceId, quantity , endDate , url) => {
   if (!serviceId) {
     throw new ApiError(httpStatus.NOT_FOUND, 'service not found')
   }
-  if (!cliendId || !quantity || !endDate) {
+  if (!cliendId || !quantity || !endDate ||!url) {
     throw new ApiError(httpStatus.BAD_REQUEST, ' some data messing tring agin')
   }
 
@@ -23,7 +23,8 @@ const createOrder = async (cliendId, serviceId, quantity , endDate) => {
       service: service._id,
       quantity,
       totalPrice,
-      endDate
+      endDate,
+      url
     })
     return order
   } catch (error) {
