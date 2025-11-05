@@ -4,11 +4,11 @@ const logger = require('../config/logger')
 const { Service, Order, User } = require('../models')
 const { http } = require('winston')
 
-const createOrder = async (cliendId, serviceId, quantity , endDate , url) => {
+const createOrder = async (cliendId, serviceId, quantity, endDate, url) => {
   if (!serviceId) {
     throw new ApiError(httpStatus.NOT_FOUND, 'service not found')
   }
-  if (!cliendId || !quantity || !endDate ||!url) {
+  if (!cliendId || !quantity || !endDate || !url) {
     throw new ApiError(httpStatus.BAD_REQUEST, ' some data messing tring agin')
   }
 
@@ -24,7 +24,7 @@ const createOrder = async (cliendId, serviceId, quantity , endDate , url) => {
       quantity,
       totalPrice,
       endDate,
-      url
+      url,
     })
     return order
   } catch (error) {
@@ -36,11 +36,24 @@ const claculatePrice = (basePrice, quantity) => {
   return Number(basePrice * quantity)
 }
 
-const getAllOrders = async () => {
+const getAllOrders = async (filter , option) => {
+  const query = {}
+  for (const key of Object.keys(filter)) {
+      if (
+        (key === "name") &&
+        filter[key] !== ""
+      ) {
+        query[key] = { $regex: filter[key], $options: "i" };
+      } else if (filter[key] !== "") {
+        query[key] = filter[key];
+      }
+    }
   try {
-    const order = await Order.find()
-      .populate('service', 'name price')
-      .populate('client', 'name email')
+    const order = await Order.paginate(query ,{
+      ...option,
+      populate : ('service')
+  
+    })
     return order
   } catch (error) {
     logger.error('Error fetching order:', error)
@@ -61,24 +74,27 @@ const getMyOrders = async (cliendId) => {
   }
 }
 const getMyOrderById = async (id, cliendId) => {
-
   if (!cliendId) {
-    throw new ApiError(httpStatus.NOT_FOUND , "you are not authorized login again")
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      'you are not authorized login again'
+    )
   }
 
-  if(!id){
-    throw new ApiError(httpStatus.NOT_FOUND,"oder not found")
+  if (!id) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'oder not found')
   }
   try {
-    const order = await Order.findOne({ _id: id, client: cliendId })
-    .populate('service', 'name price')
+    const order = await Order.findOne({ _id: id, client: cliendId }).populate(
+      'service',
+      'name price'
+    )
     return order
   } catch (error) {
     logger.error('Error fetching order:', error)
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message)
   }
 }
-
 module.exports = {
   createOrder,
   getAllOrders,

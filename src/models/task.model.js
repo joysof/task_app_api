@@ -34,8 +34,8 @@ const taskSchema = new mongoose.Schema({
     default: 'pending',
   }
 },{timestamps : true})
-userSchema.plugin(toJSON);
-userSchema.plugin(paginate);
+taskSchema.plugin(toJSON);
+taskSchema.plugin(paginate);
 
 const Task = mongoose.model("Task" , taskSchema)
 

@@ -3,6 +3,7 @@ const ApiError = require('../utils/ApiError')
 const catchAsync = require('../utils/catchAsync')
 const response = require('../config/response')
 const { OrderService } = require('../services')
+const pick = require('../utils/pick')
 
 const createOrder = catchAsync(async (req, res) => {
   const cliendId = req.user._id
@@ -19,7 +20,9 @@ const createOrder = catchAsync(async (req, res) => {
 })
 
 const getAllOrders = catchAsync(async (req, res) => {
-  const order = await OrderService.getAllOrders()
+  const filter = pick(req.query , ["name"])
+  const option = pick(req.query ,["sortBy" , "limit" , "page"])
+  const order = await OrderService.getAllOrders(filter , option)
   res.status(httpStatus.OK).json(
     response({
       message: 'orders fetched successfully',

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const { toJSON, paginate } = require("./plugins");
 const orderSchema = mongoose.Schema(
   {
     client: {
@@ -44,7 +44,8 @@ const orderSchema = mongoose.Schema(
   },
   { timestamps: true }
 )
-
+orderSchema.plugin(toJSON);
+orderSchema.plugin(paginate);
 const Order = mongoose.model('Order', orderSchema)
 
 module.exports = Order
