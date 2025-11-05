@@ -33,8 +33,10 @@ const getAllOrders = catchAsync(async (req, res) => {
   )
 })
 const getMyOrders = catchAsync(async (req, res) => {
+  const filter = pick(req.query , ["name"])
+  const option = pick(req.query,["sortBy" , "limit" , "page"])
     const cliendId = req.user._id
-  const order = await OrderService.getMyOrders(cliendId)
+  const order = await OrderService.getMyOrders(cliendId , filter ,option)
   res.status(httpStatus.OK).json(
     response({
       message: 'oders fetched successfully',

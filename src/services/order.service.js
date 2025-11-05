@@ -61,12 +61,23 @@ const getAllOrders = async (filter , option) => {
   }
 }
 
-const getMyOrders = async (cliendId) => {
+const getMyOrders = async (cliendId , filter , option) => {
+const query ={client : cliendId}
+  for (const key of Object.keys(filter)) {
+      if (
+        (key === "name") &&
+        filter[key] !== ""
+      ) {
+        query[key] = { $regex: filter[key], $options: "i" };
+      } else if (filter[key] !== "") {
+        query[key] = filter[key];
+      }
+    }
   try {
-    const orders = await Order.find({ client: cliendId }).populate(
-      'service',
-      'name price endDate'
-    )
+    const orders = await Order.paginate(query ,{
+      ...option,
+      populate : ('service')
+    })
     return orders
   } catch (error) {
     logger.error('Error fetching order:', error)
