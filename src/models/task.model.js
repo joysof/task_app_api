@@ -20,7 +20,7 @@ const taskSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['running', 'claimed', 'completed', 'rejected'],
+      enum: ['running', 'claimed', 'completed', 'rejected' ,'submitted'],
       default: 'running',
     },
     paymentStatus: {
@@ -28,13 +28,13 @@ const taskSchema = new mongoose.Schema(
       enum: ['unpaid', 'paid'],
       default: 'unpaid',
     },
-    Screenshot: {
+    screenshot: {
       type: String,
       default: false,
     },
-    compltedBy: {
-      completedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    },
+    completedBy: [ 
+      { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    ],
     adminApproval: {
       type: String,
       enum: ['pending', 'approved', 'rejected'],

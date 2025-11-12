@@ -3,7 +3,7 @@ const ApiError = require('../utils/ApiError')
 
 const { Task , Order, User  } = require('../models')
 
-const getAllTask = async (filter, option) => {
+const getAllTask = async (filter, option , taskerId) => {
   const query = {}
   for (const key of Object.keys(filter)) {
     if (key === 'name' && filter[key] !== '') {
@@ -14,6 +14,14 @@ const getAllTask = async (filter, option) => {
   }
   try {
     query.quantity = { $gt: 0 }
+  //   const taskClaimed = await Task.findOne({
+  //   compltedBy : taskerId
+  // })
+  
+
+  // if (taskClaimed && (taskClaimed.status === "completed" || taskClaimed.status === "rejected")) {
+  //   throw new ApiError(httpStatus.FORBIDDEN , "you already complted this taak")
+  // }
     const tasks = await Order.paginate(query, {
     ...option ,
     populate : 'service'
@@ -44,7 +52,7 @@ const claimTask = async (orderId , taskerId) =>{
   })
   
 
-  if (taskClaimed && (taskClaimed.status === "completed" || taskClaimed.status === "claimed")) {
+  if (taskClaimed && (taskClaimed.status === "completed" || taskClaimed.status === "rejected")) {
     throw new ApiError(httpStatus.FORBIDDEN , "you already complted this taak")
   }
 
@@ -59,7 +67,29 @@ const claimTask = async (orderId , taskerId) =>{
 
 }
 
+const submitTask = async (taskId , taskerId , screenshotUrl) =>{
+  const task = await Task.findById(taskId)
+  console.log(task ,"task")
+  if (!task) {
+    throw new ApiError(httpStatus.NOT_FOUND , " Task not found")
+
+  }
+  if (task.taskerId.toString() !== taskerId.toString()) {
+    throw new ApiError(httpStatus.FORBIDDEN , "You are not authorized to submit this task")
+  }
+  if (task.status === 'rejected' || task.status === 'completed') {
+    throw new ApiError(httpStatus.BAD_REQUEST ,"Task already submited")
+  }
+  if (!screenshotUrl) {
+    throw new ApiError(httpStatus.BAD_REQUEST ,"Screenshot is required")
+  }
+  task.screenshot = screenshotUrl
+  task.status = "submitted"
+  await task.save()
+  return task
+}
 module.exports = {
   getAllTask,
-  claimTask
+  claimTask,
+  submitTask
 }
