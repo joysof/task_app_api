@@ -86,6 +86,13 @@ const submitTask = async (taskId , taskerId , screenshotUrl) =>{
   task.screenshot = screenshotUrl
   task.status = "submitted"
   await task.save()
+  const order = await Order.findById(task.orderId)
+  if (order) {
+    if (order.quantity > 0) {
+      order.quantity -= 1
+      await order.save()
+    }
+  }
   return task
 }
 module.exports = {
