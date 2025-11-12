@@ -28,6 +28,10 @@ const taskSchema = new mongoose.Schema({
     enum: ['unpaid', 'paid',],
     default: 'unpaid',
   },
+ Screenshot:{
+    type: String,
+    default : false
+  },
    adminApproval: {
     type: String,
     enum: ['pending', 'approved', 'rejected'],

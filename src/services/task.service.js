@@ -6,7 +6,7 @@ const {Task} = require('../models')
 
 
 const getAllTask = async =>{
-
+    
 }
 
 
