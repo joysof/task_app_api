@@ -18,12 +18,12 @@ const usersData = [
     isEmailVerified: true,
   },
   {
-    fullName: "Testing User",
-    email: "user@gmail.com",
+    fullName: "Testing tasker",
+    email: "tasker@gmail.com",
     phoneNumber: "01734456873",
     dateOfBirth: "2000-06-22",
     password: "$2a$08$cUQ3uMdbQjlyDF/dgn5mNuEt9fLJZqq8TaT9aKabrFuG5wND3/mPO",
-    role: "user",
+    role: "tasker",
     isEmailVerified: true,
   },
 ];

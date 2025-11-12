@@ -20,7 +20,7 @@ const taskSchema = new mongoose.Schema({
     },
     status : {
         type :String,
-        enum : ['running' ,'completed'],
+        enum : ['running' ,'completed' ,'rejected'],
         default : 'running'
     },
      paymentStatus: {

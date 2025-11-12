@@ -1,7 +1,7 @@
 // An application depends on what roles it will have.
 
 const allRoles = {
-  Tasker: ['common', 'Tasker'],
+  tasker: ['common', 'tasker'],
   client: ['common', 'commonClient', 'client'],
   admin: ['common', 'commonAdmin', 'admin'],
 }
