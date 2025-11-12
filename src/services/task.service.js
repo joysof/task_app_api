@@ -13,6 +13,7 @@ const getAllTask = async (filter, option) => {
     }
   }
   try {
+    query.quantity = { $gt: 0 }
     const tasks = await Order.paginate(query, {
     ...option ,
     populate : 'service'
