@@ -11,11 +11,13 @@ orderRoute.get('/' , auth('client') , OrderController.getMyOrders)
 
 
 
-// admin routes and empoly 
+// admin routes
 orderRoute.get('/all' , auth('admin') , OrderController.getAllOrders)
+
+
 // common route 
 
-orderRoute.get('/:id' , auth('client' , 'admin') , OrderController.getMyOrderById)
+orderRoute.get('/:id' , auth('common') , OrderController.getMyOrderById)
 
 
 

@@ -84,19 +84,12 @@ const query ={client : cliendId}
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message)
   }
 }
-const getMyOrderById = async (id, cliendId) => {
-  if (!cliendId) {
-    throw new ApiError(
-      httpStatus.NOT_FOUND,
-      'you are not authorized login again'
-    )
-  }
-
+const getMyOrderById = async (id) => {
   if (!id) {
     throw new ApiError(httpStatus.NOT_FOUND, 'oder not found')
   }
   try {
-    const order = await Order.findOne({ _id: id, client: cliendId }).populate(
+    const order = await Order.findOne({ _id: id }).populate(
       'service',
       'name price'
     )

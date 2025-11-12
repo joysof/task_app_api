@@ -22,7 +22,9 @@ const getAllTask = async (filter, option) => {
     throw new ApiError(httpStatus.BAD_REQUEST,"get Task error")
   }
 }
-
+const getTask = async (taskId) =>{
+  const task = Task
+}
 module.exports = {
   getAllTask,
 }

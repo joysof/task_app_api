@@ -47,9 +47,8 @@ const getMyOrders = catchAsync(async (req, res) => {
   )
 })
 const getMyOrderById = catchAsync(async (req, res) => {
-    const cliendId = req.user._id
     const { id } = req.params;
-  const order = await OrderService.getMyOrderById(id , cliendId)
+  const order = await OrderService.getMyOrderById(id)
   
   res.status(httpStatus.OK).json(
     response({
