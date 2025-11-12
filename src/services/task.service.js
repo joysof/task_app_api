@@ -95,8 +95,33 @@ const submitTask = async (taskId , taskerId , screenshotUrl) =>{
   }
   return task
 }
+
+const getMyAllTask = async (filter,option ,taskerId) =>{
+
+  if (!taskerId) {
+    throw new ApiError(httpStatus.NOT_FOUND , "you ar not authorized login in again")
+  }
+  const query = {}
+  for (const key of Object.keys(filter)) {
+    if (key === 'name' && filter[key] !== '') {
+      query[key] = { $regex: filter[key], $options: 'i' }
+    } else if (filter[key] !== '') {
+      query[key] = filter[key]
+    }
+  }
+  try {
+    const tasks = await Task.paginate(query , {
+      ...option ,
+      populate : 'order'
+    })
+    return tasks
+  } catch (error) {
+    throw new ApiError(httpStatus.BAD_REQUEST ,"get my Task Error")
+  }
+}
 module.exports = {
   getAllTask,
   claimTask,
-  submitTask
+  submitTask,
+  getMyAllTask
 }

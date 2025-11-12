@@ -48,6 +48,7 @@ const submitTask = catchAsync (async (req,res) =>{
     })
   )
 })
+
 module.exports = {
   getAllTask,
   claimTask,
