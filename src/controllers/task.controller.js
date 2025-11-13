@@ -49,8 +49,25 @@ const submitTask = catchAsync (async (req,res) =>{
   )
 })
 
+const getMyAllTask = catchAsync(async(req ,res) =>{
+  const taskerId = req.user.id
+  const filter = pick (req.query ,["name"])
+  const option = pick (req.query , ["sortBy", "limit", "page"])
+  const result = await TaskServics.getMyAllTask(filter,option ,taskerId)
+
+  res.status(httpStatus.OK).json(
+    response({
+      message : "MY All Task",
+      status : 'Ok',
+      statusCode : httpStatus.OK,
+      data : result
+    })
+  )
+
+})
 module.exports = {
   getAllTask,
   claimTask,
-  submitTask
+  submitTask,
+  getMyAllTask
 }

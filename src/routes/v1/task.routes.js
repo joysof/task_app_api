@@ -7,5 +7,6 @@ const taskRoutes = express.Router()
 taskRoutes.get('/' , auth('tasker'), TaskController.getAllTask)
 taskRoutes.post('/:id/claim' , auth('tasker'), TaskController.claimTask)
 taskRoutes.post('/:id' , auth('tasker'), TaskController.submitTask)
+taskRoutes.get('/myTask' , auth('tasker'), TaskController.getMyAllTask)
 
 module.exports = taskRoutes

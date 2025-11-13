@@ -101,7 +101,7 @@ const getMyAllTask = async (filter,option ,taskerId) =>{
   if (!taskerId) {
     throw new ApiError(httpStatus.NOT_FOUND , "you ar not authorized login in again")
   }
-  const query = {}
+  const query = {taskerId}
   for (const key of Object.keys(filter)) {
     if (key === 'name' && filter[key] !== '') {
       query[key] = { $regex: filter[key], $options: 'i' }
@@ -112,11 +112,11 @@ const getMyAllTask = async (filter,option ,taskerId) =>{
   try {
     const tasks = await Task.paginate(query , {
       ...option ,
-      populate : 'order'
+      populate : 'orderId'
     })
     return tasks
   } catch (error) {
-    throw new ApiError(httpStatus.BAD_REQUEST ,"get my Task Error")
+    throw new ApiError(httpStatus.BAD_REQUEST ,"get my Task Error" , error)
   }
 }
 module.exports = {
