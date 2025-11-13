@@ -119,9 +119,31 @@ const getMyAllTask = async (filter,option ,taskerId) =>{
     throw new ApiError(httpStatus.BAD_REQUEST ,"get my Task Error" , error)
   }
 }
+
+const getMyTask = async (taskId , taskerId) =>{
+  try {
+    const task = await Task.findById(taskId)
+    .populate({
+      path : "orderId",
+      populate : {"path" : "service"}
+    })
+    .populate("clientId" , "name")
+    if (!task) {
+    throw new ApiError(httpStatus.NOT_FOUND , "Task not found ")      
+    }
+    if (task.taskerId.toString() !== taskerId.toString()) {
+      throw new ApiError(httpStatus.FORBIDDEN , "You are not authorized to view this task")
+    }
+    return task
+  } catch (error) {
+    throw new ApiError(httpStatus.BAD_REQUEST , "Error getting task by ID")
+  }
+
+}
 module.exports = {
   getAllTask,
   claimTask,
   submitTask,
-  getMyAllTask
+  getMyAllTask,
+  getMyTask
 }
